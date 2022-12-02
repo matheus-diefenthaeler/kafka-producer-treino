@@ -2,9 +2,8 @@ package diefenthaeler.com.producertreino.controller;
 
 import diefenthaeler.com.producertreino.broker.producer.TopicProducer;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -16,5 +15,11 @@ public class KafkaController {
     @GetMapping("/send")
     public void send() {
         topicProducer.send("Mensagem de teste enviada ao topico!");
+    }
+
+    @PostMapping("/send")
+    public ResponseEntity<Void> create(@RequestBody String message){
+        topicProducer.send(message);
+        return ResponseEntity.ok().build();
     }
 }
